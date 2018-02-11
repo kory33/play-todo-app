@@ -1,0 +1,9 @@
+logs
+target
+/.*
+/RUNNING_PID
+
+project/project
+project/target
+tmp
+dist
