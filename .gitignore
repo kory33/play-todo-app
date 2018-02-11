@@ -7,3 +7,5 @@ project/project
 project/target
 tmp
 dist
+
+*.jar
