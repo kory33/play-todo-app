@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/play-todo-app -Dhttp.port=${PORT} -Dplay.crypto.secret=${APPLICATION_SECRET}
+web: target/universal/stage/bin/play-todo-app -Dconfig.resource=herokuapp.conf
