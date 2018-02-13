@@ -16,7 +16,7 @@ object ModelJsonFormats {
     override def writes(list: TodoList): JsValue = Json.obj(
       "id" -> list.id,
       "title" -> list.title,
-      "seq" -> Json.toJson(list.todoItems)
+      "todo_items" -> Json.toJson(list.todoItems)
     )
   }
 
