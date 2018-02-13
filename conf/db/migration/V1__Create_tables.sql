@@ -21,3 +21,8 @@ create table_reply (
   todo_item_id bigint not null,
   content text
 );
+
+create todo_item_tag (
+  todo_item_id bigint not null,
+  tag_id bigint not null
+)
