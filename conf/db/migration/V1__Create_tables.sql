@@ -16,13 +16,13 @@ create table tag (
   color char(6)
 );
 
-create table_reply (
+create table table_reply (
   id bigint auto_increment not null primary key,
   todo_item_id bigint not null,
   content text
 );
 
-create todo_item_tag (
+create table todo_item_tag (
   todo_item_id bigint not null,
   tag_id bigint not null
 )
