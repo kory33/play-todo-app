@@ -13,7 +13,10 @@ GET     /message                    controllers.AsyncController.message
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # Creation of an instance of todo-list
-POST    /api/todo-lists             controllers.api.TodoListsController.createTodoList
+POST    /api/todo-lists             controllers.api.TodoListsController.create
+
+# Edit attributes of existing todo-list
+# POST    /api/todo-lists/:todoListId controllers.api.TodoListsController.edit
 
 # Information of a todo-list specified by the trailing id
 # GET     /api/todo-lists/:todoListId

@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller  {
 
-  def createTodoList = Action { request =>
+  def create = Action { request =>
     val json = request.body.asJson
 
     val listTitle = json.flatMap{ v => (v \ "title").asOpt[String] }
