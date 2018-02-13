@@ -10,12 +10,11 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
-)
+  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
 
-libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
+  "mysql" % "mysql-connector-java" % "5.1.41",
+  "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
 
-libraryDependencies ++= Seq(
   "org.skinny-framework" %% "skinny-orm"      % "2.5.2",
   "ch.qos.logback"       %  "logback-classic" % "1.1.+"
 )
