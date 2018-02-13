@@ -4,6 +4,7 @@ import javax.inject._
 
 import akka.actor.ActorSystem
 import models.TodoList
+import models.ModelJsonFormats._
 import play.api.libs.json.Json
 import play.api.mvc._
 

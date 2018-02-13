@@ -1,6 +1,5 @@
 package models
 
-import play.api.libs.json.{JsValue, Json, Writes}
 import scalikejdbc.WrappedResultSet
 import skinny.orm.{Alias, SkinnyCRUDMapper}
 
@@ -11,14 +10,6 @@ case class TodoItem(id: Long,
 
 object TodoItem extends SkinnyCRUDMapper[TodoItem] {
   override def defaultAlias: Alias[TodoItem] = createAlias("ti")
-
-  implicit val todoItemWrites: Writes[TodoItem] = new Writes[TodoItem]() {
-    override def writes(item: TodoItem): JsValue = Json.obj(
-      "id" -> item.id,
-      "title" -> item.title,
-      "description" -> item.description
-    ) ++ item.todoList.map { list => Json.obj("todo_list" -> Json.toJson(list)) }.getOrElse(Json.obj())
-  }
 
   hasOne[TodoList](
     TodoList,
