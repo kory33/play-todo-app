@@ -18,3 +18,13 @@ libraryDependencies ++= Seq(
   "org.skinny-framework" %% "skinny-orm"      % "2.5.2",
   "ch.qos.logback"       %  "logback-classic" % "1.1.+"
 )
+
+initialCommands := """
+import scalikejdbc._
+import skinny.orm._, feature._
+import org.joda.time._
+skinny.DBSettings.initialize()
+skinny.dbmigration.DBMigration.migrate()
+
+implicit val session = AutoSession
+"""
