@@ -6,6 +6,8 @@ import services.{ApplicationTimer, AtomicCounter, Counter}
 
 
 class DBInitializer {
+  skinny.DBSettings.initialize()
+  skinny.dbmigration.DBMigration.migrate()
   DBs.setupAll()
 }
 

@@ -25,4 +25,4 @@ create table table_reply (
 create table todo_item_tag (
   todo_item_id bigint not null,
   tag_id bigint not null
-)
+);
