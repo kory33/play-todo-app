@@ -6,6 +6,7 @@ import skinny.orm.{Alias, SkinnyCRUDMapperWithId}
 case class TodoList(id: String, title: String)
 
 object TodoList extends SkinnyCRUDMapperWithId[String, TodoList] {
+  override def useExternalIdGenerator = true
   override def generateId: String = java.util.UUID.randomUUID.toString
 
   override def idToRawValue(id: String): String = id
