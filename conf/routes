@@ -18,9 +18,30 @@ POST    /api/todo-lists             controllers.api.TodoListsController.create
 # TodoList :: Seq[TodoItem] :: Seq[Tag]
 GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(todoListId: String)
 
+# Manipulations around tags
+# Tag
+#POST    /api/todo-lists/:todoListId/tags
+# Unit
+#DELETE  /api/todo-lists/:todoListId/tags/:tagId
+
 # Manipulations around todo-items
 # TodoItem
 POST    /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.create(todoListId: String)
 # Seq[TodoItem :: Seq[Tag]]
 GET     /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.getList(todoListId: String)
+# Unit
+#DELETE  /api/todo-lists/:todoListId/todo-items/:todoItemId
+
+# Manipulations around tags on todo-items
+# TodoItem
+#POST    /api/todo-lists/:todoListId/todo-items/:todoItemId/tags
+# TodoItem
+#DELETE  /api/todo-lists/:todoListId/todo-items/:todoItemId/tags/:tagId
+
+# Manipulations around replies
+# Reply
+#POST    /api/todo-lists/:todoListId/todo-items/:todoItemId/tags
+# Seq[Reply]
+#GET     /api/todo-lists/:todoListId/todo-items/:todoItemId/tags
+
 
