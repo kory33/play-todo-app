@@ -12,11 +12,15 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-# Manipulations around todo-lists
+## Manipulations around todo-lists
+# TodoList
 POST    /api/todo-lists             controllers.api.TodoListsController.create
+# TodoList :: Seq[TodoItem] :: Seq[Tag]
 GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(todoListId: String)
 
 # Manipulations around todo-items
+# TodoItem
 POST    /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.create(todoListId: String)
-# GET     /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.getList(todoListId: String)
+# Seq[TodoItem :: Seq[Tag]]
+GET     /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.getList(todoListId: String)
 

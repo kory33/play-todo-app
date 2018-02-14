@@ -35,4 +35,14 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     }.getOrElse(todoListNotFoundResponse)
   }
 
+  def getList(todoListId: String) = Action { _ =>
+    TodoList.joins(TodoList.todoItemsRef).findById(todoListId).map { todoList =>
+      val items = todoList.todoItems.getOrElse(Nil).map { item =>
+        TodoItem.joins(TodoItem.tagsRef).findById(item.id).get
+      }
+
+      Ok(Json.toJson(items))
+    }.getOrElse(todoListNotFoundResponse)
+  }
+
 }
