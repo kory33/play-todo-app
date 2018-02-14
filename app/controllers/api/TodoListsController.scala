@@ -13,7 +13,7 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller  {
 
-  val notFoundResponse = NotFound(Json.obj(
+  private val notFoundResponse = NotFound(Json.obj(
     "message" -> "Resource not found."
   ))
 
