@@ -8,6 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.ExecutionContext
+import models.ModelJsonFormats._
 
 @Singleton
 class TagController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
@@ -31,8 +32,8 @@ class TagController @Inject()(actorSystem: ActorSystem)(implicit exec: Execution
         val tagColor = json.flatMap { v => (v \ "color").asOpt[String] }.getOrElse(defaultTagColor)
 
         val resultId = Tag.createWithAttributes('name -> tagName, 'todoListId -> todoListId, 'color -> tagColor)
-        val resultRecord = Tag.findById(resultId)
-        Ok(Json.toJson(resultRecord.get))
+        val resultRecord = Tag.findById(resultId).get
+        Ok(Json.toJson(resultRecord))
       }.getOrElse(BadRequest(Json.obj("message" -> "Tag name is required.")))
     }.getOrElse(todoListNotFoundResponse)
   }
