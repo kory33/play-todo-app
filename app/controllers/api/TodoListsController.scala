@@ -28,7 +28,7 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
       .getOrElse{ "Untitled Todo List" }
 
     val recordId = TodoList.createWithAttributes('title -> listTitle)
-    val resultRecord = TodoList.joins(TodoList.todoItemsRef).findById(recordId).get
+    val resultRecord = TodoList.findById(recordId).get
     Ok(Json.toJson(resultRecord))
   }
 
