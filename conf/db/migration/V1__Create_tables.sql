@@ -12,8 +12,8 @@ create table todo_item (
 
 create table tag (
   id bigint auto_increment not null primary key,
-  name varchar(35),
-  color char(6)
+  name varchar(35) not null,
+  color char(6) not null
 );
 
 create table table_reply (
