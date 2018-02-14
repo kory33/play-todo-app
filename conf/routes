@@ -20,7 +20,7 @@ GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(tod
 
 # Manipulations around tags
 # Tag
-#POST    /api/todo-lists/:todoListId/tags
+POST    /api/todo-lists/:todoListId/tags controllers.api.TagController.create(todoListId: String)
 # Unit
 #DELETE  /api/todo-lists/:todoListId/tags/:tagId
 
@@ -44,4 +44,4 @@ GET     /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsControll
 # Seq[Reply]
 #GET     /api/todo-lists/:todoListId/todo-items/:todoItemId/tags
 
-
+# TODO define fallback endpoint(404) for api dir

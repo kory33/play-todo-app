@@ -43,4 +43,13 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     )
   }
 
+  def delete(id: String) = Action {
+    TodoList.findById(id).map { _ =>
+      TodoList.deleteById(id)
+      Ok()
+    }.getOrElse(
+      notFoundResponse
+    )
+  }
+
 }
