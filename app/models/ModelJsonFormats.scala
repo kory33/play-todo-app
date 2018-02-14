@@ -31,4 +31,11 @@ object ModelJsonFormats {
     )
   }
 
+  implicit val replyWrites: Writes[Reply] = new Writes[Reply] {
+    override def writes(reply: Reply): JsValue = Json.obj(
+      "id" -> reply.id,
+      "content" -> reply.content
+    )
+  }
+
 }
