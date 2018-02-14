@@ -36,10 +36,10 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
   }
 
   def getList(todoListId: String) = Action { _ =>
-    TodoList.joins(TodoList.todoItemsRef).findById(todoListId).map { todoList =>
-      val items = todoList.todoItems.getOrElse(Nil).map { item =>
-        TodoItem.joins(TodoItem.tagsRef).findById(item.id).get
-      }
+    TodoList.findById(todoListId).map { _ =>
+      val items = TodoItem.joins(TodoItem.tagsRef).findAllBy(
+        scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId)
+      )
 
       Ok(Json.toJson(items))
     }.getOrElse(todoListNotFoundResponse)
