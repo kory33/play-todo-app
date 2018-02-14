@@ -3,10 +3,7 @@ package models
 import scalikejdbc.WrappedResultSet
 import skinny.orm.{Alias, SkinnyCRUDMapper}
 
-case class Tag(id: Long,
-               name: String,
-               todoListId: String,
-               color: String)
+case class Tag(id: Long, name: String, todoListId: String, color: String)
 
 object Tag extends SkinnyCRUDMapper[Tag] {
   override def defaultAlias: Alias[Tag] = createAlias("tag")
