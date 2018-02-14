@@ -8,7 +8,8 @@ case class TodoItem(id: Long,
                     todoListId: String,
                     title: String,
                     description: String,
-                    tags: Option[Seq[Tag]] = None)
+                    tags: Option[Seq[Tag]] = None,
+                    replies: Option[Seq[Reply]] = None)
 
 object TodoItem extends SkinnyCRUDMapper[TodoItem] {
   override def defaultAlias: Alias[TodoItem] = createAlias("ti")
@@ -25,4 +26,11 @@ object TodoItem extends SkinnyCRUDMapper[TodoItem] {
     many = Tag,
     merge = (todoItem, tags) => todoItem.copy(tags = Option(tags))
   )
+
+  lazy val replyRef: HasManyAssociation[TodoItem] = hasMany[Reply](
+    many = Reply -> Reply.defaultAlias,
+    on = (item, reply) => scalikejdbc.sqls.eq(item.id, reply.todoItemId),
+    merge = (item, replies) => item.copy(replies = Option(replies))
+  )
+
 }

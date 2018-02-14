@@ -13,7 +13,7 @@ object ModelJsonFormats {
       "id" -> item.id,
       "title" -> item.title,
       "description" -> item.description
-    ) ++ optionSeqToJson("tags", item.tags)
+    ) ++ optionSeqToJson("tags", item.tags) ++ optionSeqToJson("replies", item.replies)
   }
 
   implicit val todoListWrites: Writes[TodoList] = new Writes[TodoList] {
