@@ -17,6 +17,9 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     "message" -> "Resource not found."
   ))
 
+  /**
+    * Creates a record of a TodoList.
+    */
   def create = Action { request =>
     val json = request.body.asJson
 
@@ -29,6 +32,9 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     Ok(Json.toJson(resultRecord))
   }
 
+  /**
+    * Reads a record of a TodoList specified by id.
+    */
   def read(id: String) = Action {
     TodoList.joins(TodoList.todoItemsRef).findById(id).map { todoList =>
       Ok(Json.toJson(todoList))
