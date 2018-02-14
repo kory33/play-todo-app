@@ -13,6 +13,10 @@ import scala.concurrent.ExecutionContext
 @Singleton
 class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller  {
 
+  val notFoundResponse = NotFound(Json.obj(
+    "message" -> "Resource not found."
+  ))
+
   def create = Action { request =>
     val json = request.body.asJson
 
@@ -23,6 +27,14 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     val recordId = TodoList.createWithAttributes('title -> listTitle)
     val resultRecord = TodoList.joins(TodoList.todoItemsRef).findById(recordId).get
     Ok(Json.toJson(resultRecord))
+  }
+
+  def read(id: String) = Action {
+    TodoList.joins(TodoList.todoItemsRef).findById(id).map { todoList =>
+      Ok(Json.toJson(todoList))
+    }.getOrElse(
+      notFoundResponse
+    )
   }
 
 }
