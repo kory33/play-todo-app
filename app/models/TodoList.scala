@@ -16,7 +16,7 @@ object TodoList extends SkinnyCRUDMapperWithId[String, TodoList] {
 
   lazy val todoItemsRef: HasManyAssociation[TodoList] = hasMany[TodoItem](
     many = TodoItem -> TodoItem.defaultAlias,
-    on = (list, item) => scalikejdbc.sqls.eq(list.id, item.id),
+    on = (list, item) => scalikejdbc.sqls.eq(list.id, item.todoListId),
     merge = (list, items) => list.copy(todoItems = items)
   )
 
