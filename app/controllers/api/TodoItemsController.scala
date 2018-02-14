@@ -31,7 +31,7 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
         val resultRecord = TodoItem.findById(resultId).get
 
         Ok(Json.toJson(resultRecord))
-      }.getOrElse(BadRequest("A todo-item must have a title."))
+      }.getOrElse(BadRequest(Json.obj("message" -> "A todo-item must have a title.")))
     }.getOrElse(todoListNotFoundResponse)
   }
 
