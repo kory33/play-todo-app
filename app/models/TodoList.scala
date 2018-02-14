@@ -4,7 +4,7 @@ import scalikejdbc.WrappedResultSet
 import skinny.orm.feature.associations.HasManyAssociation
 import skinny.orm.{Alias, SkinnyCRUDMapperWithId}
 
-case class TodoList(id: String, title: String, todoItems: Seq[TodoItem] = Nil)
+case class TodoList(id: String, title: String, todoItems: Seq[TodoItem] = Nil, tags: Seq[Tag] = Nil)
 
 object TodoList extends SkinnyCRUDMapperWithId[String, TodoList] {
   override def useExternalIdGenerator = true
@@ -18,6 +18,12 @@ object TodoList extends SkinnyCRUDMapperWithId[String, TodoList] {
     many = TodoItem -> TodoItem.defaultAlias,
     on = (list, item) => scalikejdbc.sqls.eq(list.id, item.todoListId),
     merge = (list, items) => list.copy(todoItems = items)
+  )
+
+  lazy val tagsRef: HasManyAssociation[TodoList] = hasMany[Tag](
+    many = Tag -> Tag.defaultAlias,
+    on = (list, tag) => scalikejdbc.sqls.eq(list.id, tag.todoListId),
+    merge = (list, tags) => list.copy(tags = tags)
   )
 
   override def extract(rs: WrappedResultSet, n: scalikejdbc.ResultName[TodoList]): TodoList = new TodoList(
