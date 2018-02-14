@@ -7,7 +7,7 @@ create table todo_item (
   id bigint auto_increment not null primary key,
   todo_list_id varchar(36) not null,
   title varchar(60) not null,
-  content text
+  description text
 );
 
 create table tag (
