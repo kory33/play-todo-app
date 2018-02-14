@@ -8,7 +8,7 @@ case class TodoItem(id: Long,
                     todoListId: String,
                     title: String,
                     description: String,
-                    tags: Seq[Tag] = Nil)
+                    tags: Option[Seq[Tag]] = None)
 
 object TodoItem extends SkinnyCRUDMapper[TodoItem] {
   override def defaultAlias: Alias[TodoItem] = createAlias("ti")
@@ -23,6 +23,6 @@ object TodoItem extends SkinnyCRUDMapper[TodoItem] {
   lazy val tagsRef: HasManyAssociation[TodoItem] = hasManyThrough[Tag](
     through = TodoItemTag,
     many = Tag,
-    merge = (todoItem, tags) => todoItem.copy(tags = tags)
+    merge = (todoItem, tags) => todoItem.copy(tags = Option(tags))
   )
 }

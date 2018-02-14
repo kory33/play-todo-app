@@ -18,9 +18,5 @@ GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(tod
 
 # Manipulations around todo-items
 POST    /api/todo-lists/:todoListId/todoItems controllers.api.TodoItemsController.create(todoListId: String)
+# GET     /api/todo-lists/:todoListId/todoItems controllers.api.TodoItemsController.getList(todoListId: String)
 
-# Information of a todo item
-# Get     /api/todo-lists/:todoListId/todo-items
-
-# Detailed information of a todo item with replies to the todo
-# Get     /api/todo-lists/:todoListId/todo-items/:todoItemId
