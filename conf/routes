@@ -17,6 +17,6 @@ POST    /api/todo-lists             controllers.api.TodoListsController.create
 GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(todoListId: String)
 
 # Manipulations around todo-items
-POST    /api/todo-lists/:todoListId/todoItems controllers.api.TodoItemsController.create(todoListId: String)
-# GET     /api/todo-lists/:todoListId/todoItems controllers.api.TodoItemsController.getList(todoListId: String)
+POST    /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.create(todoListId: String)
+# GET     /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.getList(todoListId: String)
 
