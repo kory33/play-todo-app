@@ -36,7 +36,7 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     * Reads a record of a TodoList specified by id.
     */
   def read(id: String) = Action {
-    TodoList.joins(TodoList.todoItemsRef).findById(id).map { todoList =>
+    TodoList.joins(TodoList.todoItemsRef).joins(TodoList.tagsRef).findById(id).map { todoList =>
       Ok(Json.toJson(todoList))
     }.getOrElse(
       notFoundResponse

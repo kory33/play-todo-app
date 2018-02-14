@@ -12,11 +12,12 @@ create table todo_item (
 
 create table tag (
   id bigint auto_increment not null primary key,
+  todo_list_id varchar(36) not null,
   name varchar(35) not null,
   color char(6) not null
 );
 
-create table table_reply (
+create table reply (
   id bigint auto_increment not null primary key,
   todo_item_id bigint not null,
   content text
