@@ -4,7 +4,7 @@ import scalikejdbc.WrappedResultSet
 import skinny.orm.{Alias, SkinnyCRUDMapper}
 
 case class TodoItem(id: Long,
-                    todoListId: Long, todoList: Option[TodoList] = Option.empty,
+                    todoListId: String, todoList: Option[TodoList] = Option.empty,
                     title: String,
                     description: String)
 

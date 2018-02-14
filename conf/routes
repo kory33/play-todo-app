@@ -16,11 +16,8 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 POST    /api/todo-lists             controllers.api.TodoListsController.create
 GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(todoListId: String)
 
-# Edit attributes of existing todo-list
-# POST    /api/todo-lists/:todoListId controllers.api.TodoListsController.edit
-
-# Information of a todo-list specified by the trailing id
-# GET     /api/todo-lists/:todoListId
+# Manipulations around todo-items
+POST    /api/todo-lists/:todoListId/todoItems controllers.api.TodoItemsController.create(todoListId: String)
 
 # Information of a todo item
 # Get     /api/todo-lists/:todoListId/todo-items
