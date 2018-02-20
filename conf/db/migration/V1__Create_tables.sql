@@ -4,21 +4,21 @@ create table todo_list (
 );
 
 create table todo_item (
-  id bigint serial not null primary key,
+  id serial not null primary key,
   todo_list_id varchar(36) not null,
   title varchar(60) not null,
   description text
 );
 
 create table tag (
-  id bigint serial not null primary key,
+  id serial not null primary key,
   todo_list_id varchar(36) not null,
   name varchar(35) not null,
   color char(6) not null
 );
 
 create table reply (
-  id bigint serial not null primary key,
+  id serial not null primary key,
   todo_item_id bigint not null,
   content text
 );
