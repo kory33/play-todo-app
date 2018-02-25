@@ -1,0 +1,23 @@
+{
+  "name": "play-todo-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "react-scripts-kotlin": "2.1.6",
+    "clean-dir": "1.0.3",
+    "copyfiles": "1.2.0"
+  },
+  "scripts": {
+    "start": "cd frontend && react-scripts-kotlin start",
+    "build": "cd frontend && react-scripts-kotlin build",
+    "postbuild": "cleandir public && copyfiles -u 2 frontend/build/* public/",
+
+    "eject": "react-scripts-kotlin eject",
+    "gen-idea-libs": "react-scripts-kotlin gen-idea-libs",
+    "get-types": "react-scripts-kotlin get-types --dest=src/types"
+  }
+}

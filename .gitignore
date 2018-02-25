@@ -13,7 +13,9 @@ dist
 ### frontend
 
 # dependencies
-frontend/node_modules
+node_modules
+
+/public
 
 # testing
 frontend/coverage
