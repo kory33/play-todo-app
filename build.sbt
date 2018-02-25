@@ -18,3 +18,5 @@ libraryDependencies ++= Seq(
   "org.skinny-framework" %% "skinny-orm"      % "2.5.2",
   "ch.qos.logback"       %  "logback-classic" % "1.1.+"
 )
+
+unmanagedResourceDirectories in Assets <+= (baseDirectory / "frontend/build")
