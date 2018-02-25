@@ -12,7 +12,7 @@
   "scripts": {
     "postinstall": "npm run build",
     "start": "cd frontend && react-scripts-kotlin start",
-    "build": "cd frontend && react-scripts-kotlin build && cleandir public && copyfiles -u 2 frontend/build/**/* public/",
+    "build": "cd frontend && react-scripts-kotlin build",
 
     "eject": "react-scripts-kotlin eject",
     "gen-idea-libs": "react-scripts-kotlin gen-idea-libs",
