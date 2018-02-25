@@ -46,5 +46,4 @@ HEAD    /api/*path controllers.api.NonRouted.notFound(path: String)
 ## ---------- END API Endpoints -----------
 
 # Map static resources from the /public folder to the root URL path
-GET     /*file               controllers.AssetController.at(paths = "/frontend/build", indexSuffix = "index.html", file)
-GET     /                    controllers.AssetController.at(paths = "/frontend/build", indexSuffix = "index.html", file = "/")
+GET     /*file  controllers.AssetController.at(paths = "/frontend/build", indexSuffix = "index.html", file)
