@@ -20,5 +20,9 @@
     "eject": "react-scripts-kotlin eject",
     "gen-idea-libs": "react-scripts-kotlin gen-idea-libs",
     "get-types": "react-scripts-kotlin get-types --dest=src/types"
+  },
+  "engines": {
+    "node": "6.11.3",
+    "npm": "3.10.10"
   }
 }
