@@ -12,6 +12,7 @@
     "copyfiles": "1.2.0"
   },
   "scripts": {
+    "postinstall": "npm run build",
     "start": "cd frontend && react-scripts-kotlin start",
     "build": "cd frontend && react-scripts-kotlin build",
     "postbuild": "cleandir public && copyfiles -u 2 frontend/build/**/* public/",
