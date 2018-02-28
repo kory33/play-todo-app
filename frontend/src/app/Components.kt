@@ -1,13 +1,18 @@
 package app
 
-import api.ApiWrapper
 import api.TodoItem
 import api.TodoList
+import kotlinx.html.InputType
+import kotlinx.html.js.onChangeFunction
+import kotlinx.html.js.onClickFunction
+import org.w3c.dom.HTMLInputElement
 import react.RBuilder
 import react.RComponent
-import react.RProps
 import react.RState
+import react.dom.button
 import react.dom.div
+import react.dom.input
+import react.setState
 
 /**
  * Component representing a todo-item
@@ -25,10 +30,42 @@ class TodoItemComponent(props: TodoItem): RComponent<TodoItem, RState>(props) {
 /**
  * Set of components which allows user to create a todo-item
  */
-class TodoItemCreator(val api: ApiWrapper) : RComponent<RProps, RState>() {
+class TodoItemCreator(screenProps: ScreenProps) : RComponent<ScreenProps, TodoItemCreatorState>(screenProps) {
 
     override fun RBuilder.render() {
-        TODO("not implemented")
+        input(InputType.text) {
+            attrs {
+                value = state.inputText
+                placeholder = "Todo item name"
+                onChangeFunction = { e ->
+                    setState {
+                        inputText = (e.target as HTMLInputElement).value
+                        displayEmptyInputError = false
+                    }
+                }
+            }
+        }
+
+        button {
+            +"Add"
+            attrs {
+                onClickFunction = {
+                    if (state.inputText.isNotEmpty()) {
+                        // TODO post to todo-item creation endpoint
+                    } else {
+                        setState {
+                            displayEmptyInputError = true
+                        }
+                    }
+                }
+            }
+        }
+
+        if (state.displayEmptyInputError) {
+            div("error") {
+                +"Please enter a title for the todo-item."
+            }
+        }
     }
 
 }
