@@ -1,5 +1,6 @@
 package app
 
+import api.ApiWrapper
 import api.TodoItem
 import api.TodoList
 import react.RBuilder
@@ -24,10 +25,10 @@ class TodoItemComponent(props: TodoItem): RComponent<TodoItem, RState>(props) {
 /**
  * Set of components which allows user to create a todo-item
  */
-class TodoItemCreator : RComponent<RProps, RState>() {
+class TodoItemCreator(val api: ApiWrapper) : RComponent<RProps, RState>() {
 
     override fun RBuilder.render() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
 }
@@ -39,7 +40,7 @@ class TodoItemCreator : RComponent<RProps, RState>() {
 class TodoListHeader(props: TodoList): RComponent<TodoList, RState>(props) {
 
     override fun RBuilder.render() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
 }
