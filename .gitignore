@@ -10,6 +10,7 @@ dist
 .sbtserver
 .sbtserver.lock
 
+.idea
 
 ### frontend
 
