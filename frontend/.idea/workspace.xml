@@ -11,24 +11,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.kt" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/app/App.kt">
+      <file leaf-file-name="index.kt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/index/index.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="15" column="25" lean-forward="false" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-              <folding>
-                <element signature="e#13#46#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="176">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="frontend.iml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/frontend.iml">
+      <file leaf-file-name="App.kt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/App.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="18" column="9" lean-forward="false" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="128">
+              <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding>
+                <element signature="e#13#46#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,7 +48,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-1928" />
     <option name="y" value="-220" />
     <option name="width" value="1936" />
@@ -92,6 +92,12 @@
               <item name="frontend" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="frontend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="frontend" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -238,7 +244,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-220" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-220" width="1936" height="1056" extended-state="7" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -260,10 +266,10 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32934782" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35217392" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25266525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25266525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -309,6 +315,7 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/play-todo-app-frontend.iml" />
     <entry file="file://$PROJECT_DIR$/.idea/libraries/kotlin_extensions.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
@@ -317,30 +324,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/play-todo-app-frontend.iml" />
+    <entry file="file://$PROJECT_DIR$/.idea/runConfigurations/Debug_in_Chrome.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/kotlinc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/codeStyles/Project.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-343">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/runConfigurations/npm_start.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/frontend.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="18" column="9" lean-forward="false" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+        <state relative-caret-position="304">
+          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../node_modules/@jetbrains/kotlin-react/build/classes/main/kotlin-react/react/react.kjsm">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
+        <state relative-caret-position="190">
           <caret line="60" column="73" lean-forward="false" selection-start-line="60" selection-start-column="73" selection-end-line="60" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../node_modules/@jetbrains/kotlin-react-dom/build/classes/main/kotlin-react-dom/react/dom/dom.kjsm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="95" column="33" lean-forward="false" selection-start-line="95" selection-start-column="33" selection-end-line="95" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/App.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" column="25" lean-forward="false" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="128">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding>
             <element signature="e#13#46#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index/index.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

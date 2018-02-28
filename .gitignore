@@ -7,8 +7,9 @@ project/target
 tmp
 dist
 
-*.iml
-.idea
+.sbtserver
+.sbtserver.lock
+
 
 ### frontend
 

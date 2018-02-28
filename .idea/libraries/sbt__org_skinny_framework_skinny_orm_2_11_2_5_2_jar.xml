@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.skinny-framework:skinny-orm_2.11:2.5.2:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.skinny-framework/skinny-orm_2.11/jars/skinny-orm_2.11-2.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.skinny-framework/skinny-orm_2.11/srcs/skinny-orm_2.11-2.5.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
