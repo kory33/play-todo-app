@@ -13,6 +13,4 @@ interface ApiWrapper {
 
     fun getTodoItems(list: TodoList): List<TodoItem>
 
-    fun TodoList.populateWithItems(): TodoList = TodoList(id, title, getTodoItems(this), tags)
-
 }
