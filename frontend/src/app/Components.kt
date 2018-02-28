@@ -20,8 +20,10 @@ import react.setState
 class TodoItemComponent(props: TodoItem): RComponent<TodoItem, RState>(props) {
 
     override fun RBuilder.render() {
-        div("item-title") { props.title }
-        div("item-description") { props.description }
+        div("todo-item") {
+            div("item-title") { props.title }
+            div("item-description") { props.description }
+        }
     }
 
 }
