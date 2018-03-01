@@ -9,7 +9,7 @@ class App(props: ScreenProps) : RComponent<ScreenProps, RState>(props) {
 
     override fun RBuilder.render() {
         div("todo-list-header") { TodoListHeader(props.todoList) }
-        div("create-item") { TodoItemCreator(props.api) }
+        div("create-item") { TodoItemCreator(props) }
         div("todo-items") { props.todoItems.map { TodoItemComponent(it) } }
     }
 
