@@ -6,7 +6,13 @@
     "mobx": "^3.6.1",
     "mobx-react": "^4.4.2",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-scripts-ts": "2.13.0",
+    "react-dom": "^16.2.0",
+    "@types/jest": "^22.1.4",
+    "@types/node": "^9.4.6",
+    "@types/react": "^16.0.40",
+    "@types/react-dom": "^16.0.4",
+    "typescript": "^2.7.2"
   },
   "scripts": {
     "postinstall": "npm run build",
