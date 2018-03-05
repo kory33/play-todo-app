@@ -4,7 +4,7 @@ import react.RProps
 import react.RState
 import react.React
 
-external fun <P: RProps, S: RState> observer(component: React.Component<P, S>): React.Component<P, S>
+external fun observer(component: Component): Component
 
 external fun observable(value: String): ObservableBox<String>
 external fun observable(value: Int): ObservableBox<Int>
