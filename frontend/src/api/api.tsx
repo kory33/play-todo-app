@@ -1,3 +1,5 @@
+import { TodoList, TodoItem } from "./models";
+
 class Api {
 
     constructor(readonly endpointRoot: string) {}
