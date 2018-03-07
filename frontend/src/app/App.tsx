@@ -2,21 +2,21 @@ import * as React from 'react';
 import './App.css';
 import { observer } from 'mobx-react';
 import { AppState } from "./Store";
-
-const logo = require('./logo.svg');
+import { TodoItemBox } from "./TodoItemBox";
 
 @observer
 class App extends React.Component<{ appState: AppState }, {}> {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <div className="app">
+        <div className="app-header">
+          { this.props.appState.todoList.title }
+        </div>
+        <div className="app-body">
+          <div className="todo-item-box-container">
+            { this.props.appState.todoItems.map(item => <TodoItemBox todoItem={item} />) }
+          </div>
+        </div>
       </div>
     );
   }
