@@ -1,6 +1,6 @@
 import { TodoList, TodoItem } from "./models";
 
-class Api {
+export class Api {
 
     constructor(readonly endpointRoot: string) {}
 

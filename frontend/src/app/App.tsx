@@ -1,9 +1,12 @@
 import * as React from 'react';
 import './App.css';
+import { observer } from 'mobx-react';
+import { AppState } from "./Store";
 
 const logo = require('./logo.svg');
 
-class App extends React.Component {
+@observer
+class App extends React.Component<{ appState: AppState }, {}> {
   render() {
     return (
       <div className="App">
