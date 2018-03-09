@@ -7,14 +7,16 @@ export class Api {
         'Content-Type': 'application/json'
     };
 
-    constructor(readonly endpointRoot: string) {}
+    constructor(readonly endpointRoot: string, private readonly optionalRequestInit: any = {}) {}
 
     createTodoList(title: string): Promise<TodoList | null> {
         const body = JSON.stringify({ title });
         const method = 'POST';
         const headers = this.jsonRequestHeader;
 
-        return fetch(`${this.endpointRoot}/todo-lists`, { method, body, headers })
+        const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
+
+        return fetch(`${this.endpointRoot}/todo-lists`, requestInit)
                 .then(r => r.json())
                 .then((json: any | null) => {
                     const { id, title } = json;
@@ -27,8 +29,10 @@ export class Api {
         const body = JSON.stringify({ todoListId, title, description });
         const method = 'POST';
         const headers = this.jsonRequestHeader;
+        
+        const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
 
-        return fetch(`${this.endpointRoot}/todo-lists/${todoListId}/todo-items`, { method, body, headers })
+        return fetch(`${this.endpointRoot}/todo-lists/${todoListId}/todo-items`, requestInit)
                 .then(r => r.ok ? r.json() : null)
                 .then((json: any | null) => {
                     if (json === null) { return null; }
