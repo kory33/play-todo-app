@@ -9,6 +9,7 @@ export class AppState {
     @observable todoItems: TodoItem[];
 
     constructor(readonly api: Api) {
+        this.todoItems = [];
         this.todoList = null;
 
         this.createEmptyState();
@@ -16,7 +17,6 @@ export class AppState {
 
     private async createEmptyState() {
         this.todoList = await this.api.createTodoList('Untitled Todo List') as TodoList;
-        this.todoItems = [];
     }
 
 }
