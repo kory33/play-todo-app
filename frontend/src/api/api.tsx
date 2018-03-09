@@ -11,13 +11,8 @@ export class Api {
 
     async createTodoList(title: string): Promise<TodoList | null> {
         const body = JSON.stringify({ title });
-        const method = 'POST';
-        const headers = this.jsonRequestHeader;
 
-        const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
-
-        return fetch(`${this.endpointRoot}/todo-lists`, requestInit)
-                .then(r => r.json())
+        return this.issueRequest(`todo-lists`, 'POST', body)
                 .then((json: any | null) => {
                     const { id, title } = json;
                     return new TodoList(id, title);
@@ -27,14 +22,8 @@ export class Api {
 
     async createTodoItem(todoListId: string, title: string, description: string): Promise<TodoItem | null> {
         const body = JSON.stringify({ title, description });
-        const method = 'POST';
-        const headers = this.jsonRequestHeader;
-        // tslint:disable-next-line:no-console
-        console.log(body);
-        const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
 
-        return fetch(`${this.endpointRoot}/todo-lists/${todoListId}/todo-items`, requestInit)
-                .then(r => r.ok ? r.json() : null)
+        return this.issueRequest(`todo-lists/${todoListId}/todo-items`, 'POST', body)
                 .then((json: any | null) => {
                     if (json === null) { return null; }
 
@@ -42,6 +31,28 @@ export class Api {
                     return new TodoItem(id, title, description);
                 })
                 .catch(() => null);
+    }
+
+    async getTodoItems(todoListId: string): Promise<TodoItem[] | null> {
+        return this.issueRequest(`todo-lists/${todoListId}`, 'GET')
+            .then((json: any | null) => {
+                if (json === null) { return null; }
+                const items = json.todo_items as any[];
+                return items.map(({ id, title, description }) => new TodoItem(id, title, description));
+            })
+            .catch(() => null);
+    }
+
+    private issueRequest(
+            endpoint: string,
+            method: string,
+            body: string | null = null,
+            optionalHeaders: any = {}): Promise<any | null> {
+        const headers = Object.assign(optionalHeaders, this.jsonRequestHeader);
+        const requestInit = Object.assign({ method, body, headers}, this.optionalRequestInit) as RequestInit;
+
+        return fetch(`${this.endpointRoot}/${endpoint}`, requestInit)
+            .then(r => r.ok ? r.json() : null);
     }
 
 }
