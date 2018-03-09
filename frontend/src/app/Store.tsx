@@ -8,11 +8,14 @@ export class AppState {
 
     @observable todoItems: TodoItem[];
 
-    constructor(readonly api: Api) {
-        this.todoItems = [];
-        this.todoList = null;
+    constructor(readonly api: Api, todoListId: string | null = null) {
+        [this.todoItems, this.todoList] = [[], null];
 
-        this.createEmptyState();
+        if (todoListId === null) {
+            this.createEmptyState();
+        } else {
+            this.createStateFrom(todoListId);
+        }
     }
 
     async postNewTodoItem(title: string, description: string) {
@@ -31,4 +34,12 @@ export class AppState {
         this.todoList = await this.api.createTodoList('Untitled Todo List') as TodoList;
     }
 
+    private async createStateFrom(todoListId: string) {
+        const fetchResult = await this.api.getTodoList(todoListId);
+        if (fetchResult === null) {
+            this.createEmptyState();
+        } else {
+            [this.todoItems, this.todoList] = fetchResult;
+        }
+    }
 }
