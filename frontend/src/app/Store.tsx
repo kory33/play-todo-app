@@ -15,6 +15,18 @@ export class AppState {
         this.createEmptyState();
     }
 
+    async postNewTodoItem(title: string, description: string) {
+        if (this.todoList === null) {
+            throw Error('Todo list is not yet initialized!');
+        }
+
+        this.api.createTodoItem(this.todoList.id, title, description).then(result => {
+            if (result !== null) {
+                this.todoItems.push(result);
+            }
+        });
+    }
+
     private async createEmptyState() {
         this.todoList = await this.api.createTodoList('Untitled Todo List') as TodoList;
     }

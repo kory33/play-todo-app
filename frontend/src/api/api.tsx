@@ -4,11 +4,12 @@ export class Api {
 
     private jsonRequestHeader = {
         'Accept': 'application/json',
+        'content-type': 'application/json'
     };
 
     constructor(readonly endpointRoot: string, private readonly optionalRequestInit: any = {}) {}
 
-    createTodoList(title: string): Promise<TodoList | null> {
+    async createTodoList(title: string): Promise<TodoList | null> {
         const body = JSON.stringify({ title });
         const method = 'POST';
         const headers = this.jsonRequestHeader;
@@ -24,11 +25,12 @@ export class Api {
                 .catch(() => null);
     }
 
-    createTodoItem(todoListId: string, title: string, description: string) {
-        const body = JSON.stringify({ todoListId, title, description });
+    async createTodoItem(todoListId: string, title: string, description: string): Promise<TodoItem | null> {
+        const body = JSON.stringify({ title, description });
         const method = 'POST';
         const headers = this.jsonRequestHeader;
-        
+        // tslint:disable-next-line:no-console
+        console.log(body);
         const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
 
         return fetch(`${this.endpointRoot}/todo-lists/${todoListId}/todo-items`, requestInit)

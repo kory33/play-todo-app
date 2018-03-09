@@ -3,5 +3,5 @@ export class TodoItem {
 }
 
 export class TodoList {
-    constructor(readonly id: String, readonly title: string) {}
+    constructor(readonly id: string, readonly title: string) {}
 }
