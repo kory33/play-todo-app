@@ -14,8 +14,7 @@ export class Api {
         const headers = this.jsonRequestHeader;
 
         const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
-        // tslint:disable-next-line:no-console
-        console.log(requestInit);
+
         return fetch(`${this.endpointRoot}/todo-lists`, requestInit)
                 .then(r => r.json())
                 .then((json: any | null) => {
