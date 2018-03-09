@@ -12,9 +12,9 @@ export class AppState {
         [this.todoItems, this.todoList] = [[], null];
 
         if (todoListId === null) {
-            this.createEmptyState();
+            this.fillWithEmptyState();
         } else {
-            this.createStateFrom(todoListId);
+            this.fillStateUsing(todoListId);
         }
     }
 
@@ -30,14 +30,14 @@ export class AppState {
         });
     }
 
-    private async createEmptyState() {
+    private async fillWithEmptyState() {
         this.todoList = await this.api.createTodoList('Untitled Todo List') as TodoList;
     }
 
-    private async createStateFrom(todoListId: string) {
+    private async fillStateUsing(todoListId: string) {
         const fetchResult = await this.api.getTodoList(todoListId);
         if (fetchResult === null) {
-            this.createEmptyState();
+            this.fillWithEmptyState();
         } else {
             [this.todoItems, this.todoList] = fetchResult;
         }
