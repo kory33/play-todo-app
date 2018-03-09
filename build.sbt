@@ -21,5 +21,3 @@ libraryDependencies ++= Seq(
 
 unmanagedResourceDirectories in Assets <+= (baseDirectory / "frontend/build")
 
-
-fork in run := true
