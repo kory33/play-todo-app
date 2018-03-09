@@ -33,12 +33,18 @@ export class Api {
                 .catch(() => null);
     }
 
-    async getTodoItems(todoListId: string): Promise<TodoItem[] | null> {
+    async getTodoList(todoListId: string): Promise<[TodoItem[], TodoList] | null> {
         return this.issueRequest(`todo-lists/${todoListId}`, 'GET')
             .then((json: any | null) => {
                 if (json === null) { return null; }
-                const items = json.todo_items as any[];
-                return items.map(({ id, title, description }) => new TodoItem(id, title, description));
+
+                const {id, title} = json;
+                const todoList = new TodoList(id, title);
+
+                const rawItems = json.todo_items as any[];
+                const todoItems = rawItems.map(({ id, title, description }) => new TodoItem(id, title, description));
+
+                return [todoItems, todoList] as [TodoItem[], TodoList];
             })
             .catch(() => null);
     }
