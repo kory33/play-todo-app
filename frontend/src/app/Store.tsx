@@ -8,6 +8,8 @@ export class AppState {
 
     @observable todoItems: TodoItem[];
 
+    @observable showTodoItemCreationDialog: boolean = false;
+
     constructor(readonly api: Api, todoListId: string | null = null) {
         [this.todoItems, this.todoList] = [[], null];
 
