@@ -5,6 +5,7 @@ import { AppState } from './Store';
 import CircularProgress from 'material-ui/CircularProgress';
 import { TodoItemCreateBox } from './TodoItemCreateBox';
 import { TodoItemBox } from './TodoItemBox';
+import { Toolbar, ToolbarGroup } from 'material-ui';
 
 const LoadingScreen = () => (
   <div className="loading-screen">
@@ -15,18 +16,22 @@ const LoadingScreen = () => (
 @observer
 export default class App extends React.Component<{ appState: AppState }, {}> {
   render() {
-    if (this.props.appState.todoList === null) {
+    const state = this.props.appState;
+
+    if (state.todoList === null) {
       return <LoadingScreen />;
     }
     return (
       <div className="app">
-        <div className="app-header">
-          {this.props.appState.todoList.title}
-        </div>
+        <Toolbar className="app-header">
+          <ToolbarGroup firstChild={true}>
+            {state.todoList.title}
+          </ToolbarGroup>
+        </Toolbar>
         <div className="app-body">
-          <TodoItemCreateBox appState={this.props.appState} />
+          <TodoItemCreateBox appState={state} />
           <div className="todo-item-box-container">
-            {this.props.appState.todoItems.map(item => <TodoItemBox key={item.id} todoItem={item} />)}
+            {state.todoItems.map(item => <TodoItemBox key={item.id} todoItem={item} />)}
           </div>
         </div>
       </div>
