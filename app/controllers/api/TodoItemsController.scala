@@ -21,17 +21,21 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     val json = request.body.asJson
 
     TodoList.findById(todoListId).map { _ =>
-      json.flatMap(v => (v \ "title").asOpt[String]).map { title =>
-        val description = json.flatMap(v => (v \ "description").asOpt[String]).getOrElse("")
-        val resultId = TodoItem.createWithAttributes(
-          'todo_list_id -> todoListId,
-          'title -> title,
-          'description -> description
-        )
-        val resultRecord = TodoItem.findById(resultId).get
+      json
+        .flatMap { v => (v \ "title").asOpt[String] }
+        .flatMap { title => if (title.isEmpty) None else Option(title) }
+        .map { title =>
+          val description = json.flatMap(v => (v \ "description").asOpt[String]).getOrElse("")
+          val resultId = TodoItem.createWithAttributes(
+            'todo_list_id -> todoListId,
+            'title -> title,
+            'description -> description
+          )
+          val resultRecord = TodoItem.findById(resultId).get
 
-        Ok(Json.toJson(resultRecord))
-      }.getOrElse(BadRequest(Json.obj("message" -> "A todo-item must have a title.")))
+          Ok(Json.toJson(resultRecord))
+        }
+        .getOrElse(BadRequest(Json.obj("message" -> "A todo-item must have a non-empty title.")))
     }.getOrElse(todoListNotFoundResponse)
   }
 
