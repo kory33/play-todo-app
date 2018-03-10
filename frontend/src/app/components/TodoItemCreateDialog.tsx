@@ -1,6 +1,7 @@
 import { AppState } from '../Store';
 import * as React from 'react';
 import { Dialog } from 'material-ui';
+import { observer } from 'mobx-react';
 
 class TodoItemCreateBox extends React.Component<{ appState: AppState }, {}> {
   private inputTitle: string = '';
@@ -27,6 +28,7 @@ class TodoItemCreateBox extends React.Component<{ appState: AppState }, {}> {
   }
 }
 
+@observer
 export default class TodoItemCreateDialog extends React.Component<{ appState: AppState }, {}> {
   render() {
     const state = this.props.appState;

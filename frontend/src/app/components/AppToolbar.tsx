@@ -1,7 +1,9 @@
 import { AppState } from '../Store';
 import * as React from 'react';
 import { Toolbar, ToolbarGroup, RaisedButton } from 'material-ui';
+import { observer } from 'mobx-react';
 
+@observer
 export default class AppToolbar extends React.Component<{ appState: AppState }, {}> {
   render() {
     const state = this.props.appState;
