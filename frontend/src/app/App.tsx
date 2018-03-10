@@ -6,15 +6,17 @@ import CircularProgress from 'material-ui/CircularProgress';
 import { TodoItemCreateBox } from './TodoItemCreateBox';
 import { TodoItemBox } from './TodoItemBox';
 
+const LoadingScreen = () => (
+  <div className="loading-screen">
+    <CircularProgress size={80} thickness={5} />
+  </div>
+);
+
 @observer
-class App extends React.Component<{ appState: AppState }, {}> {
+export default class App extends React.Component<{ appState: AppState }, {}> {
   render() {
     if (this.props.appState.todoList === null) {
-      return (
-        <div className="loading-screen">
-          <CircularProgress size={80} thickness={5} />
-        </div>
-      );
+      return <LoadingScreen />;
     }
     return (
       <div className="app">
@@ -31,5 +33,3 @@ class App extends React.Component<{ appState: AppState }, {}> {
     );
   }
 }
-
-export default App;
