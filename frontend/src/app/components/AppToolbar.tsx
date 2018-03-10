@@ -14,7 +14,12 @@ export default class AppToolbar extends React.Component<{ appState: AppState }, 
 
     return (
       <Toolbar className="app-header">
-        <ToolbarGroup firstChild={true}>
+        <ToolbarGroup
+          firstChild={true}
+          style={{
+            fontSize: 22
+          }}
+        >
           {state.todoList.title}
         </ToolbarGroup>
         <ToolbarGroup>
