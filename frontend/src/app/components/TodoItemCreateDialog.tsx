@@ -18,8 +18,8 @@ export default class TodoItemCreateDialog extends React.Component<{ appState: Ap
       return;
     }
 
-    this.props.appState.postNewTodoItem(this.inputTitle, this.inputDescription);
-    this.closeDialog();
+    this.props.appState.postNewTodoItem(this.inputTitle, this.inputDescription)
+      .then(() => this.closeDialog());
   }
 
   render() {
@@ -42,7 +42,7 @@ export default class TodoItemCreateDialog extends React.Component<{ appState: Ap
         <TextField
           hintText="Todo title"
           floatingLabelText="title"
-          onChange={(e) => this.inputTitle = (e.target as any).value}
+          onChange={(_, value) => this.inputTitle = value}
           style={{
             display: 'block',
             width: '50%'
@@ -53,7 +53,7 @@ export default class TodoItemCreateDialog extends React.Component<{ appState: Ap
           floatingLabelText="descriptions"
           multiLine={true}
           rowsMax={8}
-          onChange={(e) => this.inputDescription = (e.target as any).value}
+          onChange={(_, value) => this.inputDescription = value}
           style={{
             width: '100%'
           }}
