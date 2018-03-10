@@ -3,10 +3,9 @@ import './App.css';
 import { observer } from 'mobx-react';
 import { AppState } from './Store';
 import CircularProgress from 'material-ui/CircularProgress';
-import { TodoItemCreateBox } from './TodoItemCreateBox';
 import { TodoItemBox } from './TodoItemBox';
-import { Dialog } from 'material-ui';
 import AppToolbar from './components/AppToolbar';
+import TodoItemCreateDialog from './components/TodoItemCreateDialog';
 
 const LoadingScreen = () => (
   <div className="loading-screen">
@@ -26,15 +25,7 @@ export default class App extends React.Component<{ appState: AppState }, {}> {
     return (
       <div className="app">
         <AppToolbar appState={state}/>
-        <Dialog
-          title="Create Todo Item"
-          actions={[]}
-          modal={false}
-          open={state.showTodoItemCreationDialog}
-          onRequestClose={() => { state.showTodoItemCreationDialog = false; }}
-        >
-          <TodoItemCreateBox appState={state} />      
-        </Dialog>
+        <TodoItemCreateDialog appState={state} />
         <div className="todo-item-box-container">
           {state.todoItems.map(item => <TodoItemBox key={item.id} todoItem={item} />)}
         </div>
