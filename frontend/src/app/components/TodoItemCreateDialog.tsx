@@ -1,6 +1,6 @@
 import { AppState } from '../Store';
 import * as React from 'react';
-import { Dialog, FlatButton, TextField } from 'material-ui';
+import { Dialog, FlatButton, TextField, RaisedButton } from 'material-ui';
 import { observer } from 'mobx-react';
 
 @observer
@@ -27,7 +27,7 @@ export default class TodoItemCreateDialog extends React.Component<{ appState: Ap
 
     const actions = [
       <FlatButton key="cancelcreatetodo" label="Cancel" primary={true} onClick={this.closeDialog} />,
-      <FlatButton key="createtodo" label="Create" primary={true} onClick={this.postTodoItem} />
+      <RaisedButton key="createtodo" label="Create" primary={true} onClick={this.postTodoItem} />
     ];
 
     return (
@@ -41,13 +41,22 @@ export default class TodoItemCreateDialog extends React.Component<{ appState: Ap
       >
         <TextField
           hintText="Todo title"
+          floatingLabelText="title"
           onChange={(e) => this.inputTitle = (e.target as any).value}
+          style={{
+            display: 'block',
+            width: '50%'
+          }}
         />
         <TextField
           hintText="Todo descriptions"
           floatingLabelText="descriptions"
           multiLine={true}
+          rowsMax={8}
           onChange={(e) => this.inputDescription = (e.target as any).value}
+          style={{
+            width: '100%'
+          }}
         />
       </Dialog>
     );
