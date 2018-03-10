@@ -1,47 +1,54 @@
 import { AppState } from '../Store';
 import * as React from 'react';
-import { Dialog } from 'material-ui';
+import { Dialog, FlatButton, TextField } from 'material-ui';
 import { observer } from 'mobx-react';
-
-class TodoItemCreateBox extends React.Component<{ appState: AppState }, {}> {
-  private inputTitle: string = '';
-  private inputDescription: string = '';
-
-  render() {
-    return (
-      <div className="todo-item-create-box">
-        <input
-          className="todo-item-create-input-title"
-          type="text"
-          onChange={(e: any) => this.inputTitle = e.target.value}
-        />
-        <input
-          className="todo-item-create-input-description"
-          type="text"
-          onChange={(e: any) => this.inputDescription = e.target.value}
-        />
-        <button onClick={() => this.props.appState.postNewTodoItem(this.inputTitle, this.inputDescription)}>
-          Create new item
-        </button>
-      </div>
-    );
-  }
-}
 
 @observer
 export default class TodoItemCreateDialog extends React.Component<{ appState: AppState }, {}> {
+
+  private inputTitle: string = '';
+  private inputDescription: string = '';
+
+  closeDialog = () => {
+    this.props.appState.showTodoItemCreationDialog = false;
+  }
+
+  postTodoItem = () => {
+    if (this.inputTitle === '') {
+      return;
+    }
+
+    this.props.appState.postNewTodoItem(this.inputTitle, this.inputDescription);
+    this.closeDialog();
+  }
+
   render() {
     const state = this.props.appState;
+
+    const actions = [
+      <FlatButton key="cancelcreatetodo" label="Cancel" primary={true} onClick={this.closeDialog} />,
+      <FlatButton key="createtodo" label="Create" primary={true} onClick={this.postTodoItem} />
+    ];
 
     return (
       <Dialog
         title="Create Todo Item"
-        actions={[]}
+        actions={actions}
         modal={false}
+        autoScrollBodyContent={true}
         open={state.showTodoItemCreationDialog}
-        onRequestClose={() => { state.showTodoItemCreationDialog = false; }}
+        onRequestClose={this.closeDialog}
       >
-        <TodoItemCreateBox appState={state} />      
+        <TextField
+          hintText="Todo title"
+          onChange={(e) => this.inputTitle = (e.target as any).value}
+        />
+        <TextField
+          hintText="Todo descriptions"
+          floatingLabelText="descriptions"
+          multiLine={true}
+          onChange={(e) => this.inputDescription = (e.target as any).value}
+        />
       </Dialog>
     );
   }
