@@ -32,15 +32,21 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     Ok(Json.toJson(resultRecord))
   }
 
+  def renameTitle(id: String) = Action { request =>
+    val newTitle = request.body.asJson.flatMap { v => (v \ "title").asOpt[String] }
+
+    TodoList.updateTitle(id, newTitle).map { updated =>
+      Ok(Json.toJson(updated))
+    }.getOrElse(notFoundResponse)
+  }
+
   /**
     * Reads a record of a TodoList specified by id.
     */
   def read(id: String) = Action {
     TodoList.joins(TodoList.todoItemsRef).joins(TodoList.tagsRef).findById(id).map { todoList =>
       Ok(Json.toJson(todoList))
-    }.getOrElse(
-      notFoundResponse
-    )
+    }.getOrElse(notFoundResponse)
   }
 
   def delete(id: String) = Action {

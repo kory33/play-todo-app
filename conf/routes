@@ -9,6 +9,8 @@
 POST    /api/todo-lists             controllers.api.TodoListsController.create
 # TodoList :: Seq[TodoItem] :: Seq[Tag]
 GET     /api/todo-lists/:todoListId controllers.api.TodoListsController.read(todoListId: String)
+# TodoList
+PUT     /api/todo-lists/:todoListId/title controllers.api.TodoListsController.renameTitle(todoListId: String)
 
 # Manipulations around tags
 # Tag

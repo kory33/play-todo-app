@@ -14,6 +14,14 @@ object TodoList extends SkinnyCRUDMapperWithId[String, TodoList] {
 
   override lazy val defaultAlias: Alias[TodoList] = createAlias("tl")
 
+  def updateTitle(id: String, optionalTitle: Option[String]): Option[TodoList] = {
+    findById(id).map { found =>
+      val title = optionalTitle.getOrElse(found.title)
+      updateById(found.id).withAttributes('title -> title)
+      findById(id).get
+    }
+  }
+
   lazy val todoItemsRef: HasManyAssociation[TodoList] = hasMany[TodoItem](
     many = TodoItem -> TodoItem.defaultAlias,
     on = (list, item) => scalikejdbc.sqls.eq(list.id, item.todoListId),
