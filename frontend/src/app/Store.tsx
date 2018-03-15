@@ -33,6 +33,23 @@ export class AppState {
         });
     }
 
+    async renameTodoList(newTitle: string) {
+        if (this.todoList === null) {
+            throw Error('Todo list is not yet initialized!');
+        }
+
+        if (newTitle === '') {
+            throw Error('Title string cannot be empty.');
+        }
+
+        return this.api.renameTodoList(this.todoList.id, newTitle).then(result => {
+            if (result !== null) {
+                this.todoList = result;
+            }
+            return result;
+        });
+    }
+
     private async fillWithEmptyState() {
         this.todoList = await this.api.createTodoList('Untitled Todo List') as TodoList;
     }
