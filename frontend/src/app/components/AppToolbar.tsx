@@ -12,6 +12,8 @@ interface ToolBarState {
 @observer
 export default class AppToolbar extends React.Component<{ appState: AppState }, ToolBarState> {
 
+  titleField: TextField | null;
+
   constructor(props: { appState: AppState }) {
     super(props);
 
@@ -52,9 +54,13 @@ export default class AppToolbar extends React.Component<{ appState: AppState }, 
           <TextField
             value={this.state.titleInput}
             name="titlefield"
+            ref={(field) => {this.titleField = field; }}
             onChange={(e, newValue) => this.setState({ titleInput: newValue })}
             onBlur={this.handleOnTitleFieldBlur(activeTodoList)}
             inputStyle={{ fontSize: 22 }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && this.titleField !== null) { this.titleField.blur(); }
+            }}
           />
           {this.state.updatingTitle ? <CircularProgress size={20} thickness={2} /> : null}
         </ToolbarGroup>
