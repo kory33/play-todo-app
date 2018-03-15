@@ -3,7 +3,7 @@ import './App.css';
 import { observer } from 'mobx-react';
 import { AppState } from './Store';
 import CircularProgress from 'material-ui/CircularProgress';
-import { TodoItemBox } from './TodoItemBox';
+import { TodoItemBox } from './components/TodoItemBox';
 import AppToolbar from './components/AppToolbar';
 import TodoItemCreateDialog from './components/TodoItemCreateDialog';
 

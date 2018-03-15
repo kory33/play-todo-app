@@ -13,3 +13,46 @@
   left: 0px;
   right: 0px;
 }
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 56px;
+  width: 100%;
+  z-index: 10;
+}
+
+.todo-item-box-container {
+  height: calc(100% - 56px);
+  position: absolute;
+  top: 56px;
+  margin: 10px;
+  column-count: initial;
+  column-gap: 2 rem;
+  column-width: 20vw;
+}
+
+.todo-item {
+  margin: 10px;
+  padding: 10px;
+  display: block;
+  break-inside: avoid;
+  overflow-wrap: break-word;
+}
+
+.todo-item-divider {
+  margin: 5px 0px 5px;
+  background-color: #ddd;
+  height: 1px;
+  border: none;
+}
+
+.todo-item-title {
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.todo-item-description {
+  margin-left: 10px;
+}

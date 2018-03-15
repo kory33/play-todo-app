@@ -46,7 +46,7 @@ export default class AppToolbar extends React.Component<{ appState: AppState }, 
     }
 
     return (
-      <Toolbar className="app-header">
+      <Toolbar className="app-header" style={{ backgroundColor: '#ddd'}}>
         <ToolbarGroup
           firstChild={true}
           style={{ marginLeft: 20 }}
