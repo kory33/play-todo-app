@@ -1,33 +1,69 @@
 import { AppState } from '../Store';
 import * as React from 'react';
-import { Dialog, FlatButton, TextField, RaisedButton } from 'material-ui';
+import { Dialog, FlatButton, TextField, RaisedButton, CircularProgress } from 'material-ui';
 import { observer } from 'mobx-react';
 
-@observer
-export default class TodoItemCreateDialog extends React.Component<{ appState: AppState }, {}> {
+interface DialogState {
+  title: string;
+  description: string;
+  inputStarted: boolean;
+  submitting: boolean;
+}
 
-  private inputTitle: string = '';
-  private inputDescription: string = '';
+@observer
+export default class TodoItemCreateDialog
+    extends React.Component<{ appState: AppState }, DialogState> {
+
+  get initialState() {
+    return { title: '', description: '', inputStarted: false, submitting: false };
+  }
+  
+  constructor(props: { appState: AppState }) {
+    super(props);
+    this.state = this.initialState;
+  }
+
+  get titleFormErrorText(): string | null {
+    if (this.state.inputStarted && this.state.title === '') {
+      return 'Title is required.';
+    }
+
+    return null;
+  }
 
   closeDialog = () => {
     this.props.appState.showTodoItemCreationDialog = false;
+    this.setState(this.initialState);
   }
 
   postTodoItem = () => {
-    if (this.inputTitle === '') {
+    this.setState({ inputStarted: true });
+
+    if (this.state.title === '') {
       return;
     }
 
-    this.props.appState.postNewTodoItem(this.inputTitle, this.inputDescription)
-      .then(() => this.closeDialog());
+    this.setState({ submitting: true });
+
+    this.props.appState.postNewTodoItem(this.state.title, this.state.description)
+      .then((item) => {
+        this.setState({ submitting: false });
+        if (item !== null) {
+          this.closeDialog();
+        }
+      });
   }
 
   render() {
     const state = this.props.appState;
 
+    const createButtonElement = !this.state.submitting
+      ? <RaisedButton key="createtodo" label="Create" primary={true} onClick={this.postTodoItem} />
+      : <CircularProgress key="progress" size={20} thickness={2} />;
+
     const actions = [
-      <FlatButton key="cancelcreatetodo" label="Cancel" primary={true} onClick={this.closeDialog} />,
-      <RaisedButton key="createtodo" label="Create" primary={true} onClick={this.postTodoItem} />
+      createButtonElement,
+      <FlatButton key="cancelcreatetodo" label="Cancel" primary={true} onClick={this.closeDialog} />
     ];
 
     return (
@@ -42,18 +78,20 @@ export default class TodoItemCreateDialog extends React.Component<{ appState: Ap
         <TextField
           hintText="Todo title"
           floatingLabelText="title"
-          onChange={(_, value) => this.inputTitle = value}
+          name="title"
           style={{
             display: 'block',
             width: '50%'
           }}
+          onChange={(_: any, value: string) => this.setState({ title: value, inputStarted: true })}
+          errorText={this.titleFormErrorText}
         />
         <TextField
           hintText="Todo descriptions"
           floatingLabelText="descriptions"
           multiLine={true}
           rowsMax={8}
-          onChange={(_, value) => this.inputDescription = value}
+          onChange={(_, value) => this.setState({ description: value, inputStarted: true })}
           style={{
             width: '100%'
           }}

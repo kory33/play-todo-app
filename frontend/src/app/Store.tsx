@@ -25,10 +25,11 @@ export class AppState {
             throw Error('Todo list is not yet initialized!');
         }
 
-        this.api.createTodoItem(this.todoList.id, title, description).then(result => {
+        return this.api.createTodoItem(this.todoList.id, title, description).then(result => {
             if (result !== null) {
                 this.todoItems.push(result);
             }
+            return result;
         });
     }
 
