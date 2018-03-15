@@ -13,10 +13,7 @@ export class Api {
         const body = JSON.stringify({ title });
 
         return this.issueRequest(`todo-lists`, 'POST', body)
-                .then((json: any | null) => {
-                    const { id, title } = json;
-                    return new TodoList(id, title);
-                })
+                .then(TodoList.fromObject)
                 .catch(() => null);
     }
 
@@ -24,12 +21,7 @@ export class Api {
         const body = JSON.stringify({ title, description });
 
         return this.issueRequest(`todo-lists/${todoListId}/todo-items`, 'POST', body)
-                .then((json: any | null) => {
-                    if (json === null) { return null; }
-
-                    const { id, title, description } = json;
-                    return new TodoItem(id, title, description);
-                })
+                .then(TodoItem.fromObject)
                 .catch(() => null);
     }
 
@@ -38,14 +30,18 @@ export class Api {
             .then((json: any | null) => {
                 if (json === null) { return null; }
 
-                const {id, title} = json;
-                const todoList = new TodoList(id, title);
-
-                const rawItems = json.todo_items as any[];
-                const todoItems = rawItems.map(({ id, title, description }) => new TodoItem(id, title, description));
-
+                const todoList = TodoList.fromObject(json);
+                const todoItems = json.todo_items.map(TodoItem.fromObject);
                 return [todoItems, todoList] as [TodoItem[], TodoList];
             })
+            .catch(() => null);
+    }
+
+    async renameTodoList(todoListId: string, newTitle: string): Promise<TodoList | null> {
+        const body = JSON.stringify({ title: newTitle });
+
+        return this.issueRequest(`todo-lists/${todoListId}/title`, 'PUT', body)
+            .then(TodoList.fromObject)
             .catch(() => null);
     }
 
