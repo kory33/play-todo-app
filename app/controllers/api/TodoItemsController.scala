@@ -11,6 +11,7 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext
 
 import utils.OptionUtil._
+import utils.JsonUtil._
 
 @Singleton
 class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
@@ -25,17 +26,14 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
 
   def create(todoListId: String) = Action { request =>
     val json = request.body.asJson
-    val itemTitle = json
-      .flatMap { v => (v \ "title").asOpt[String] }
+    val itemTitle = json.getStringAt("title")
       .flatMap { title => if (title.isEmpty) None else Option(title) }
 
     TodoList.findById(todoListId)
       .projectLeftWith(todoListNotFoundResponse)
       .flatMap { _ => itemTitle.toLeft(todoItemLacksTitleResponse) }.left
       .map { title =>
-        val description = json.flatMap(v => (v \ "description").asOpt[String])
-        val result = TodoItem.createWith(todoListId, title, description)
-
+        val result = TodoItem.createWith(todoListId, title, json.getStringAt("description"))
         Ok(Json.toJson(result))
       }
       .merge

@@ -11,6 +11,7 @@ import play.api.mvc._
 import scala.concurrent.ExecutionContext
 
 import utils.OptionUtil._
+import utils.JsonUtil._
 
 @Singleton
 class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller  {
@@ -23,8 +24,7 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     * Creates a record of a TodoList.
     */
   def create = Action { request =>
-    val listTitle = request.body.asJson
-        .flatMap{ jsonObj => (jsonObj \ "title").asOpt[String] }
+    val listTitle = request.body.asJson.getStringAt("title")
         .flatMap{ v => if(v.isEmpty || v.length > 60) None else Option(v) }
         .getOrElse{ "Untitled Todo List" }
 
@@ -32,8 +32,7 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
   }
 
   def renameTitle(id: String) = Action { request =>
-    val newTitle = request.body.asJson
-      .flatMap { jsonObj => (jsonObj \ "title").asOpt[String] }
+    val newTitle = request.body.asJson.getStringAt("title")
 
     TodoList.updateTitle(id, newTitle)
       .projectLeftWith(notFoundResponse)
