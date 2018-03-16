@@ -39,14 +39,17 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
       .merge
   }
 
-  def getList(todoListId: String) = Action { _ =>
-    TodoList.findById(todoListId).map { _ =>
-      val items = TodoItem.joins(TodoItem.tagsRef).findAllBy(
-        scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId)
-      )
+  def getList(todoListId: String) = Action {
+    TodoList.findById(todoListId)
+      .projectLeftWith(todoListNotFoundResponse)
+      .map { _ =>
+        val items = TodoItem.joins(TodoItem.tagsRef).findAllBy(
+          scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId)
+        )
 
-      Ok(Json.toJson(items))
-    }.getOrElse(todoListNotFoundResponse)
+        Ok(Json.toJson(items))
+      }
+      .merge
   }
 
 }
