@@ -14,6 +14,16 @@ case class TodoItem(id: Long,
 object TodoItem extends SkinnyCRUDMapper[TodoItem] {
   override def defaultAlias: Alias[TodoItem] = createAlias("ti")
 
+  def createWith(todoListId: String, title: String, description: Option[String]): TodoItem = {
+    val resultId = createWithAttributes(
+      'todo_list_id -> todoListId,
+      'title -> title,
+      'description -> description.getOrElse("")
+    )
+
+    findById(resultId).get
+  }
+
   override def extract(rs: WrappedResultSet, n: scalikejdbc.ResultName[TodoItem]): TodoItem = new TodoItem(
     id = rs.get(n.id),
     todoListId = rs.get(n.todoListId),

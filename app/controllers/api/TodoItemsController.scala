@@ -10,6 +10,8 @@ import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
+import utils.OptionUtil._
+
 @Singleton
 class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
 
@@ -23,25 +25,20 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
 
   def create(todoListId: String) = Action { request =>
     val json = request.body.asJson
+    val itemTitle = json
+      .flatMap { v => (v \ "title").asOpt[String] }
+      .flatMap { title => if (title.isEmpty) None else Option(title) }
 
     TodoList.findById(todoListId)
-      .toLeft(todoListNotFoundResponse).left.map { _ =>
-      json
-        .flatMap { v => (v \ "title").asOpt[String] }
-        .flatMap { title => if (title.isEmpty) None else Option(title) }
-        .map { title =>
-          val description = json.flatMap(v => (v \ "description").asOpt[String]).getOrElse("")
-          val resultId = TodoItem.createWithAttributes(
-            'todo_list_id -> todoListId,
-            'title -> title,
-            'description -> description
-          )
-          val resultRecord = TodoItem.findById(resultId).get
+      .projectLeftWith(todoListNotFoundResponse)
+      .flatMap { _ => itemTitle.toLeft(todoItemLacksTitleResponse) }.left
+      .map { title =>
+        val description = json.flatMap(v => (v \ "description").asOpt[String])
+        val result = TodoItem.createWith(todoListId, title, description)
 
-          Ok(Json.toJson(resultRecord))
-        }
-        .getOrElse(todoItemLacksTitleResponse)
-    }.merge
+        Ok(Json.toJson(result))
+      }
+      .merge
   }
 
   def getList(todoListId: String) = Action { _ =>
