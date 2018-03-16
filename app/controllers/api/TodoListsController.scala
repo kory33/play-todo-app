@@ -10,6 +10,8 @@ import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
+import utils.OptionUtil._
+
 @Singleton
 class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller  {
 
@@ -21,41 +23,37 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     * Creates a record of a TodoList.
     */
   def create = Action { request =>
-    val json = request.body.asJson
+    val listTitle = request.body.asJson
+        .flatMap{ jsonObj => (jsonObj \ "title").asOpt[String] }
+        .flatMap{ v => if(v.isEmpty || v.length > 60) None else Option(v) }
+        .getOrElse{ "Untitled Todo List" }
 
-    // TODO Validate title size
-    val listTitle = json.flatMap{ v => (v \ "title").asOpt[String] }
-      .getOrElse{ "Untitled Todo List" }
-
-    val recordId = TodoList.createWithAttributes('title -> listTitle)
-    val resultRecord = TodoList.findById(recordId).get
-    Ok(Json.toJson(resultRecord))
+    Ok(Json.toJson(TodoList.create(listTitle)))
   }
 
   def renameTitle(id: String) = Action { request =>
-    val newTitle = request.body.asJson.flatMap { v => (v \ "title").asOpt[String] }
+    val newTitle = request.body.asJson
+      .flatMap { jsonObj => (jsonObj \ "title").asOpt[String] }
 
-    TodoList.updateTitle(id, newTitle).map { updated =>
-      Ok(Json.toJson(updated))
-    }.getOrElse(notFoundResponse)
+    TodoList.updateTitle(id, newTitle)
+      .projectLeftWith(notFoundResponse)
+      .map { updated => Ok(Json.toJson(updated)) }
+      .merge
   }
 
   /**
     * Reads a record of a TodoList specified by id.
     */
   def read(id: String) = Action {
-    TodoList.joins(TodoList.todoItemsRef).joins(TodoList.tagsRef).findById(id).map { todoList =>
-      Ok(Json.toJson(todoList))
-    }.getOrElse(notFoundResponse)
+    TodoList.joins(TodoList.todoItemsRef).joins(TodoList.tagsRef).findById(id)
+      .projectLeftWith(notFoundResponse)
+      .map { todoList => Ok(Json.toJson(todoList)) }
+      .merge
   }
 
   def delete(id: String) = Action {
-    TodoList.findById(id).map { _ =>
-      TodoList.deleteById(id)
-      Ok(Json.obj())
-    }.getOrElse(
-      notFoundResponse
-    )
+    val deleteCount = TodoList.deleteById(id)
+    if (deleteCount != 0) Ok(Json.obj()) else notFoundResponse
   }
 
 }

@@ -14,6 +14,11 @@ object TodoList extends SkinnyCRUDMapperWithId[String, TodoList] {
 
   override lazy val defaultAlias: Alias[TodoList] = createAlias("tl")
 
+  def create(title: String): TodoList = {
+    val recordId = TodoList.createWithAttributes('title -> title)
+    TodoList.findById(recordId).get
+  }
+
   def updateTitle(id: String, optionalTitle: Option[String]): Option[TodoList] = {
     findById(id).map { found =>
       val title = optionalTitle.getOrElse(found.title)

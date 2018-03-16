@@ -17,10 +17,15 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     "message" -> "Specified list was not found."
   ))
 
+  private val todoItemLacksTitleResponse = BadRequest(Json.obj(
+    "message" -> "A todo-item must have a non-empty title."
+  ))
+
   def create(todoListId: String) = Action { request =>
     val json = request.body.asJson
 
-    TodoList.findById(todoListId).map { _ =>
+    TodoList.findById(todoListId)
+      .toLeft(todoListNotFoundResponse).left.map { _ =>
       json
         .flatMap { v => (v \ "title").asOpt[String] }
         .flatMap { title => if (title.isEmpty) None else Option(title) }
@@ -35,8 +40,8 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
 
           Ok(Json.toJson(resultRecord))
         }
-        .getOrElse(BadRequest(Json.obj("message" -> "A todo-item must have a non-empty title.")))
-    }.getOrElse(todoListNotFoundResponse)
+        .getOrElse(todoItemLacksTitleResponse)
+    }.merge
   }
 
   def getList(todoListId: String) = Action { _ =>
