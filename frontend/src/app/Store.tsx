@@ -50,6 +50,14 @@ export class AppState {
         });
     }
 
+    async deleteTodoItem(item: TodoItem) {
+        if (this.todoList === null) {
+            throw Error('Todo list is not yet initialized!');
+        }
+
+        return this.api.deleteTodoItem(this.todoList.id, item.id);
+    }
+
     private async fillWithEmptyState() {
         this.todoList = await this.api.createTodoList('Untitled Todo List') as TodoList;
     }
