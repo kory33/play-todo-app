@@ -10,7 +10,7 @@ import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
-import utils.OptionUtil._
+import utils.EitherUtil._
 import utils.JsonUtil._
 
 @Singleton
@@ -29,10 +29,9 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     val itemTitle = json.getStringAt("title")
       .flatMap { title => if (title.isEmpty) None else Option(title) }
 
-    TodoList.findById(todoListId)
-      .projectLeftWith(todoListNotFoundResponse)
-      .flatMap { _ => itemTitle.toLeft(todoItemLacksTitleResponse) }.left
-      .map { title =>
+    TodoList.findById(todoListId).toLeft(todoListNotFoundResponse)
+      .flatMapLeft { _ => itemTitle.toLeft(todoItemLacksTitleResponse) }
+      .mapLeft { title =>
         val result = TodoItem.createWith(todoListId, title, json.getStringAt("description"))
         Ok(Json.toJson(result))
       }
@@ -40,9 +39,8 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
   }
 
   def getList(todoListId: String) = Action {
-    TodoList.findById(todoListId)
-      .projectLeftWith(todoListNotFoundResponse)
-      .map { _ =>
+    TodoList.findById(todoListId).toLeft(todoListNotFoundResponse)
+      .mapLeft { _ =>
         val items = TodoItem.joins(TodoItem.tagsRef).findAllBy(
           scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId)
         )

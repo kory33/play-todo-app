@@ -10,7 +10,7 @@ import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
-import utils.OptionUtil._
+import utils.EitherUtil._
 import utils.JsonUtil._
 
 @Singleton
@@ -35,8 +35,8 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     val newTitle = request.body.asJson.getStringAt("title")
 
     TodoList.updateTitle(id, newTitle)
-      .projectLeftWith(notFoundResponse)
-      .map { updated => Ok(Json.toJson(updated)) }
+      .toLeft(notFoundResponse)
+      .mapLeft { updated => Ok(Json.toJson(updated)) }
       .merge
   }
 
@@ -45,14 +45,16 @@ class TodoListsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     */
   def read(id: String) = Action {
     TodoList.joins(TodoList.todoItemsRef).joins(TodoList.tagsRef).findById(id)
-      .projectLeftWith(notFoundResponse)
-      .map { todoList => Ok(Json.toJson(todoList)) }
+      .toLeft(notFoundResponse)
+      .mapLeft { todoList => Ok(Json.toJson(todoList)) }
       .merge
   }
 
   def delete(id: String) = Action {
     val deleteCount = TodoList.deleteById(id)
-    if (deleteCount != 0) Ok(Json.obj()) else notFoundResponse
+
+    if (deleteCount != 0) Ok(Json.obj())
+    else notFoundResponse
   }
 
 }
