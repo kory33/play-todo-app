@@ -69,7 +69,7 @@
 .todo-item:hover .todo-item-overlay {
   display:flex;
   background-color:black;
-  opacity:0.75;
+  opacity:0.85;
   align-items: center;
   justify-content: center;
 }
