@@ -2,7 +2,7 @@ import { TodoList, TodoItem } from './models';
 
 export class Api {
 
-    private jsonRequestHeader = {
+    private jsonRequestHeaders = {
         'Accept': 'application/json',
         'content-type': 'application/json'
     };
@@ -60,8 +60,8 @@ export class Api {
             endpoint: string,
             method: string,
             body: string | null = null,
-            header: any = {}): Promise<Response> {
-        const requestInit = Object.assign({ method, body, header }, this.optionalRequestInit) as RequestInit;
+            headers: any = {}): Promise<Response> {
+        const requestInit = Object.assign({ method, body, headers }, this.optionalRequestInit) as RequestInit;
 
         return fetch(`${this.endpointRoot}/${endpoint}`, requestInit);
     }
@@ -70,10 +70,10 @@ export class Api {
             endpoint: string,
             method: string,
             body: string | null = null,
-            additionalHeader: any = {}): Promise<any | null> {
-        const header = Object.assign(additionalHeader, this.jsonRequestHeader);
+            additionalHeaders: any = {}): Promise<any | null> {
+        const headers = Object.assign(additionalHeaders, this.jsonRequestHeaders);
 
-        return this.issueRequest(endpoint, method, body, header)
+        return this.issueRequest(endpoint, method, body, headers)
             .then(r => r.ok ? r.json() : null);
     }
 
