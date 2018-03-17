@@ -23,8 +23,8 @@ POST    /api/todo-lists/:todoListId/tags controllers.api.TagController.create(to
 POST    /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.create(todoListId: String)
 # Seq[TodoItem :: Seq[Tag]]
 GET     /api/todo-lists/:todoListId/todo-items controllers.api.TodoItemsController.getList(todoListId: String)
-# Unit
-#DELETE  /api/todo-lists/:todoListId/todo-items/:todoItemId
+# Unit(200 on success)
+DELETE  /api/todo-lists/:todoListId/todo-items/:todoItemId controllers.api.TodoItemsController.delete(todoListId: String, todoItemId: String)
 
 # Manipulations around tags on todo-items
 # TodoItem
