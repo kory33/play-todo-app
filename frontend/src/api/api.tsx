@@ -12,7 +12,7 @@ export class Api {
     async createTodoList(title: string): Promise<TodoList | null> {
         const body = JSON.stringify({ title });
 
-        return this.issueRequest(`todo-lists`, 'POST', body)
+        return this.issueJsonRequest(`todo-lists`, 'POST', body)
                 .then(TodoList.fromObject)
                 .catch(() => null);
     }
@@ -20,13 +20,13 @@ export class Api {
     async createTodoItem(todoListId: string, title: string, description: string): Promise<TodoItem | null> {
         const body = JSON.stringify({ title, description });
 
-        return this.issueRequest(`todo-lists/${todoListId}/todo-items`, 'POST', body)
+        return this.issueJsonRequest(`todo-lists/${todoListId}/todo-items`, 'POST', body)
                 .then(TodoItem.fromObject)
                 .catch(() => null);
     }
 
     async getTodoList(todoListId: string): Promise<[TodoItem[], TodoList] | null> {
-        return this.issueRequest(`todo-lists/${todoListId}`, 'GET')
+        return this.issueJsonRequest(`todo-lists/${todoListId}`, 'GET')
             .then((json: any | null) => {
                 if (json === null) { return null; }
 
@@ -40,20 +40,40 @@ export class Api {
     async renameTodoList(todoListId: string, newTitle: string): Promise<TodoList | null> {
         const body = JSON.stringify({ title: newTitle });
 
-        return this.issueRequest(`todo-lists/${todoListId}/title`, 'PUT', body)
+        return this.issueJsonRequest(`todo-lists/${todoListId}/title`, 'PUT', body)
             .then(TodoList.fromObject)
             .catch(() => null);
+    }
+
+    /**
+     * Deletes the specified todo item
+     * @param todoListId id of todo-list in which the item is to be deleted
+     * @param todoItemId id of todo-item to be deleted
+     * @returns the promise that returns `true` if deletion is successful
+     */
+    async deleteTodoItem(todoListId: string, todoItemId: string): Promise<boolean> {
+        return this.issueRequest(`todo-lists/${todoListId}/todo-items/${todoItemId}`, 'DELETE', '')
+            .then(r => r.ok);
     }
 
     private issueRequest(
             endpoint: string,
             method: string,
             body: string | null = null,
-            optionalHeaders: any = {}): Promise<any | null> {
-        const headers = Object.assign(optionalHeaders, this.jsonRequestHeader);
-        const requestInit = Object.assign({ method, body, headers}, this.optionalRequestInit) as RequestInit;
+            header: any = {}): Promise<Response> {
+        const requestInit = Object.assign({ method, body, header }, this.optionalRequestInit) as RequestInit;
 
-        return fetch(`${this.endpointRoot}/${endpoint}`, requestInit)
+        return fetch(`${this.endpointRoot}/${endpoint}`, requestInit);
+    }
+
+    private issueJsonRequest(
+            endpoint: string,
+            method: string,
+            body: string | null = null,
+            additionalHeader: any = {}): Promise<any | null> {
+        const header = Object.assign(additionalHeader, this.jsonRequestHeader);
+
+        return this.issueRequest(endpoint, method, body, header)
             .then(r => r.ok ? r.json() : null);
     }
 
