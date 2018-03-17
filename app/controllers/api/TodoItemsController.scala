@@ -20,6 +20,10 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
     "message" -> "Specified list was not found."
   ))
 
+  private val todoItemNotFoundResponse = NotFound(Json.obj(
+    "message" -> "Specified todo-item was not found."
+  ))
+
   private val todoItemLacksTitleResponse = BadRequest(Json.obj(
     "message" -> "A todo-item must have a non-empty title."
   ))
@@ -38,16 +42,30 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
       .merge
   }
 
-  def getList(todoListId: String) = Action {
-    TodoList.findById(todoListId).toLeft(todoListNotFoundResponse)
-      .mapLeft { _ =>
-        val items = TodoItem.joins(TodoItem.tagsRef).findAllBy(
-          scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId)
-        )
+  private def getItemsOn(todoListId: String) = TodoList.findById(todoListId)
+    .map { _ =>
+      TodoItem.joins(TodoItem.tagsRef).findAllBy(
+        scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId.toLong)
+      )
+    }
 
-        Ok(Json.toJson(items))
-      }
+  def getList(todoListId: String) = Action {
+    getItemsOn(todoListId).toLeft(todoListNotFoundResponse)
+      .mapLeft { searchResult => Ok(Json.toJson(searchResult)) }
       .merge
+  }
+
+  def delete(todoListId: String, todoItemId: String) = Action { _ =>
+    getItemsOn(todoListId).toLeft(todoListNotFoundResponse)
+      .flatMapLeft { searchResult =>
+        searchResult
+          .find { item => item.id.toString.equals(todoItemId) }
+          .toLeft(todoItemNotFoundResponse)
+      }
+      .mapLeft { foundItem =>
+        TodoItem.deleteById(foundItem.id)
+        Ok(Json())
+      }.merge
   }
 
 }
