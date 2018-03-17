@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, IObservableArray } from 'mobx';
 import { TodoList, TodoItem } from '../api/models';
 import { Api } from '../api/api';
 
@@ -6,12 +6,12 @@ export class AppState {
 
     @observable todoList: TodoList | null;
 
-    @observable todoItems: TodoItem[];
+    @observable todoItems: IObservableArray<TodoItem>;
 
     @observable showTodoItemCreationDialog: boolean = false;
 
     constructor(readonly api: Api, todoListId: string | null = null) {
-        [this.todoItems, this.todoList] = [[], null];
+        [this.todoItems, this.todoList] = [observable.array<TodoItem>(), null];
 
         if (todoListId === null) {
             this.fillWithEmptyState();
@@ -55,7 +55,11 @@ export class AppState {
             throw Error('Todo list is not yet initialized!');
         }
 
-        return this.api.deleteTodoItem(this.todoList.id, item.id);
+        return this.api.deleteTodoItem(this.todoList.id, item.id).then(successful => {
+            if (successful) {
+                this.todoItems.remove(item);
+            }
+        });
     }
 
     private async fillWithEmptyState() {
@@ -67,7 +71,8 @@ export class AppState {
         if (fetchResult === null) {
             this.fillWithEmptyState();
         } else {
-            [this.todoItems, this.todoList] = fetchResult;
+            const [todoItems, todoList] = fetchResult;
+            [this.todoItems, this.todoList] = [observable.array(todoItems), todoList];
         }
     }
 }

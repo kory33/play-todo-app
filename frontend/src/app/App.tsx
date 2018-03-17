@@ -27,7 +27,7 @@ export default class App extends React.Component<{ appState: AppState }, {}> {
         <AppToolbar appState={state}/>
         <TodoItemCreateDialog appState={state} />
         <div className="todo-item-box-container">
-          {state.todoItems.map(item => <TodoItemBox key={item.id} todoItem={item} />)}
+          {state.todoItems.map(item => <TodoItemBox key={item.id} todoItem={item} appState={state} />)}
         </div>
       </div>
     );
