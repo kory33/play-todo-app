@@ -64,7 +64,7 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
       }
       .mapLeft { foundItem =>
         TodoItem.deleteById(foundItem.id)
-        Ok(Json())
+        Ok(Json.obj())
       }.merge
   }
 
