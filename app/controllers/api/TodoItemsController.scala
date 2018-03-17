@@ -45,7 +45,7 @@ class TodoItemsController @Inject()(actorSystem: ActorSystem)(implicit exec: Exe
   private def getItemsOn(todoListId: String) = TodoList.findById(todoListId)
     .map { _ =>
       TodoItem.joins(TodoItem.tagsRef).findAllBy(
-        scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId.toLong)
+        scalikejdbc.sqls.eq(TodoItem.defaultAlias.todoListId, todoListId)
       )
     }
 
