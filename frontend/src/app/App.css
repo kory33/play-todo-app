@@ -24,17 +24,22 @@
 }
 
 .todo-item-box-container {
-  height: calc(100% - 56px);
   position: absolute;
-  top: 56px;
-  margin: 10px;
+  top: 66px;
+  margin: 10px 20px 30px 20px;
   column-count: initial;
-  column-gap: 2 rem;
+  column-gap: 1rem;
   column-width: 20vw;
 }
 
+@media only screen and (max-width: 768px) {
+  .todo-item-box-container {
+    column-count: 1;
+  }
+}
+
 .todo-item {
-  margin: 10px;
+  margin: 0px 10px 20px 10px;
   padding: 10px;
   display: block;
   break-inside: avoid;
@@ -55,6 +60,7 @@
 
 .todo-item-description {
   margin-left: 10px;
+  font-size: 14px;
 }
 
 .todo-item-overlay {
